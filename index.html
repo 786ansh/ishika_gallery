@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Rotating Image Slider with Music</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(to right, #2c5364, #0f2027);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: rotate 30s linear infinite;
+        }
+        @keyframes rotate {
+            0% {
+                transform: perspective(1000px) rotateY(0deg);
+            }
+            100% {
+                transform: perspective(1000px) rotateY(360deg);
+            }
+        }
+        .intro-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            z-index: 15;
+            opacity: 0;
+            animation: fadeInOutIntro 4s ease-in-out forwards;
+        }
+       
+        .slider span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-origin: center;
+            transform-style: preserve-3d;
+            transform: rotateY(calc(var(--i) * 45deg)) translateZ(350px);
+        }
+        .slider span img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .slider span:hover img {
+            transform: translateY(-50px) scale(1.1);
+        }
+
+        /* Centered Text */
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #fffffff;
+            text-align: center;
+            z-index: 10;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            /*animation: fadeIn 3s ease-in-out infinite alternate;*/
+            animation: fadeInOut 4s ease-in-out forwards;
+        }
+
+       @keyframes fadeInOut {
+            0% { 
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            30% { 
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            70% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        /* Music Player */
+        .music-player {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="intro-text">
+        Hi Ishika, a small gift for you! 🎁
+    </div>
+    
+    <div class="main-content">
+        <div class="slider">
+            <span style="--i:1;"><img src="./ishi1.jpg"></span>
+            <span style="--i:2;"><img src="./ishi2.jpg"></span>
+            <span style="--i:3;"><img src="./ishi3.jpg"></span>
+            <span style="--i:4;"><img src="./ishi4.jpg"></span>
+            <span style="--i:5;"><img src="./ishi9.jpg"></span>
+            <span style="--i:6;"><img src="./ishi6.jpg"></span>
+            <span style="--i:7;"><img src="./ishi7.jpg"></span>
+            <span style="--i:8;"><img src="./ishi8.jpg"></span>
+        </div>
+    </div>
+
+    <!-- Centered Text -->
+    <div class="center-text">
+        For my best friend who deserves all the happiness in the world! ❤️🎶 Here's a special vibe just for you!
+    </div>
+
+    <!-- Background Music -->
+    <audio class="music-player" id="bg-music" loop>
+        <source src="https://s31.aconvert.com/convert/p3r68-cdx67/lc5hl-01bes.mp3" type="audio/mp3">
+    </audio>
+    
+    <button id="play-button" style="
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background: #ff4757;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    ">
+        ▶ Play Music
+    </button>
+
+</body>
+</html>
+
+
+<script>
+    const audio = document.getElementById("bg-music");
+    const playButton = document.getElementById("play-button");
+
+    document.querySelector(".main-content").style.display = "none";
+
+    setTimeout(() => {
+        document.querySelector(".intro-text").style.display = "none";
+        document.querySelector(".main-content").style.display = "block";
+    }, 4000); 
+
+    window.onload = function() {
+        audio.play().catch(() => {
+            playButton.style.display = "block"; 
+        });
+    };
+
+    playButton.addEventListener("click", () => {
+        audio.play();
+        playButton.style.display = "none"; 
+    });
+</script>
